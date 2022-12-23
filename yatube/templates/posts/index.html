@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+<!DOCTYPE html> <!-- Используется html 5 версии -->
+<html lang="ru"> <!-- Язык сайта - русский -->
+  <head>
+  </head>
+  <body>
+    <header>
+      {% include 'includes/header.html' %}      
+    </header>
+    <main> 
+      <div class="container">        
+        {% block header %}Последние обновления на сайте{% endblock %}
+        {% block content %}
+        {% for post in posts %}
+        <article>
+          <ul>
+            <li>
+              Автор:  {{ post.author.get_full_name }}
+            </li>
+            <li>
+              Дата публикации: {{ post.pub_date|date:"d M Y" }}
+            </li>
+          </ul>      
+          <p>
+            {{ post.text|linebreaksbr }}
+          </p>
+          <a href="group_list.html">все записи группы</a>
+          {% if not forloop.last %}<hr>{% endif %}
+          {% endfor %}
+        </article>
+        {% endblock %}
+        <!-- под последним постом нет линии -->
+      </div>  
+    </main>
+    
+    <!-- Использованы классы бустрапа: -->
+    <!-- border-top: создаёт тонкую линию сверху блока -->
+    <!-- text-center: выравнивает текстовые блоки внутри блока по центру -->
+    <!-- py-3: контент внутри размещается с отступом сверху и снизу -->         
+    <footer class="border-top text-center py-3">
+      {% include 'includes/footer.html' %} 
+    </footer>
+  </body>
