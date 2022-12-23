@@ -8,6 +8,6 @@ urlpatterns = [
     path(
         "group/<slug:slug>/",
         views.group_posts,
-        name="group_posts"
+        name="group_list"
     )
 ]
