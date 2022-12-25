@@ -1,7 +1,6 @@
 from django.contrib import admin
-# Из модуля models импортируем модель Post
-from .models import Post
-from .models import Group
+
+from .models import Group, Post
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -16,7 +15,11 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('text',)
     list_filter = ('pub_date',)
     empty_value_display = '-пусто-'
+    # можно вынести эту строку в константу в settings.py
+    # - при доработке я это учту
 
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Group)
+
+# @admin.register использую в дальнейшем спасибо :)
