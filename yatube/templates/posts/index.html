@@ -1,38 +1,18 @@
 {% extends "base.html" %}
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-  </head>
-  <body>
-    <header>
-      {% include 'includes/header.html' %}      
-    </header>
-    <main> 
-      <div class="container">        
-        {% block header %}Последние обновления на сайте{% endblock %}
-        {% block content %}
-        {% for post in posts %}
-        <article>
-          <ul>
-            <li>
-              Автор:  {{ post.author.get_full_name }}
-            </li>
-            <li>
-              Дата публикации: {{ post.pub_date|date:"d M Y" }}
-            </li>
-          </ul>      
-          <p>
-            {{ post.text|linebreaksbr }}
-          </p>
-          <a href="group_list.html">все записи группы</a>
-          {% if not forloop.last %}<hr>{% endif %}
-          {% endfor %}
-        </article>
-        {% endblock %}
-        <!-- под последним постом нет линии -->
-      </div>  
-    </main>
-    <footer class="border-top text-center py-3">
-      {% include 'includes/footer.html' %} 
-    </footer>
-  </body>
+{% block title %}Последние обновления сообщества{{ group.title }}{% endblock %}
+{% block header %}{{ group.title }}{% endblock %}
+{% block content %}
+    <p>{{ group.description }}</p>
+    {% for post in posts %}
+    <h3>
+        Автор: {{ post.author.get_full_name }},
+        Дата публикации: {{ post.pub_date|date:"d M Y" }}
+    </h3>
+    <p>{{ post.text|linebreaksbr }}</p>
+    {% if post.group %}
+    <a href="{% url 'posts:group_list' post.group.slug %}">Смотреть все записи сообщества</a>
+    {% endif %}
+    {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+
+{% endblock %}
